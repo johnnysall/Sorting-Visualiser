@@ -18,85 +18,96 @@ const selectionSortBtn = document.getElementsByClassName("selectionSortBtn");
 navBarList.push(selectionSortBtn[0]);
 navBarList.push(selectionSortBtn[1]);
 
-if (selectionSortBtn[0]) {
-    selectionSortBtn[0].addEventListener("click", async function() {
-        if (running !== true) {
-            running = true;
-            setup.resetArray();
-            setup.disableNavBarElements("selectionSortBtn"); 
-            await selectionSort.selectionSort(arrayToSort);
-            setup.enableNavBarElements("selectionSortBtn"); 
-            running = false;
-        }
-    });
+for (let i = 0; i < 2; i++) {
+    if (selectionSortBtn[i]) {
+        selectionSortBtn[i].addEventListener("click", async function() {
+            if (running !== true) {
+                running = true;
+                setup.resetArray();
+                setup.disableNavBarElements("selectionSortBtn"); 
+                await selectionSort.selectionSort(arrayToSort);
+                setup.enableNavBarElements("selectionSortBtn"); 
+                running = false;
+            }
+        });
+    }
 }
 
 const insertionSortBtn = document.getElementsByClassName("insertionSortBtn");
 navBarList.push(insertionSortBtn[0]);
 navBarList.push(insertionSortBtn[1]);
 
-if (insertionSortBtn[0]) {
-    insertionSortBtn[0].addEventListener("click", async function() {
-        if (running !== true) {
-            running = true;
-            setup.resetArray();
-            setup.disableNavBarElements("insertionSortBtn"); 
-            await insertionSort.insertionSort(arrayToSort);
-            setup.enableNavBarElements("insertionSortBtn"); 
-            running = false;
-        }
-    });
+for (let i = 0; i < 2; i++) {
+    if (insertionSortBtn[i]) {
+        insertionSortBtn[i].addEventListener("click", async function() {
+            if (running !== true) {
+                running = true;
+                setup.resetArray();
+                setup.disableNavBarElements("insertionSortBtn"); 
+                await insertionSort.insertionSort(arrayToSort);
+                setup.enableNavBarElements("insertionSortBtn"); 
+                running = false;
+            }
+        });
+    }
 }
 
 const bubbleSortBtn = document.getElementsByClassName("bubbleSortBtn");
 navBarList.push(bubbleSortBtn[0]);
 navBarList.push(bubbleSortBtn[1]);
 
-if (bubbleSortBtn[0]) {
-    bubbleSortBtn[0].addEventListener("click", async function() {
-        if (running !== true) {
-            running = true;
-            setup.resetArray();
-            setup.disableNavBarElements("bubbleSortBtn"); 
-            await bubbleSort.bubbleSort(arrayToSort);
-            setup.enableNavBarElements("bubbleSortBtn"); 
-            running = false;
-        }
-    });
+for (let i = 0; i < 2; i++) {
+    if (bubbleSortBtn[i]) {
+        bubbleSortBtn[i].addEventListener("click", async function() {
+            if (running !== true) {
+                running = true;
+                setup.resetArray();
+                setup.disableNavBarElements("bubbleSortBtn"); 
+                await bubbleSort.bubbleSort(arrayToSort);
+                setup.enableNavBarElements("bubbleSortBtn"); 
+                running = false;
+            }
+        });
+    }
 }
 
 const mergeSortBtn = document.getElementsByClassName("mergeSortBtn");
 navBarList.push(mergeSortBtn[0]);
 navBarList.push(mergeSortBtn[1]);
 
-if (mergeSortBtn[0]) {
-    mergeSortBtn[0].addEventListener("click", async function() {
-        if (running !== true) {
-            running = true;
-            setup.resetArray();
-            setup.disableNavBarElements("mergeSortBtn"); 
-            await mergeSort.mergeSort(arrayToSort, 0, arrayToSort.length - 1);
-            setup.enableNavBarElements("mergeSortBtn"); 
-            running = false;
-        }
-    });
+for (let i = 0; i < 2; i++) {
+    if (mergeSortBtn[i]) {
+        mergeSortBtn[i].addEventListener("click", async function() {
+            if (running !== true) {
+                running = true;
+                setup.resetArray();
+                setup.disableNavBarElements("mergeSortBtn"); 
+                await mergeSort.mergeSort(arrayToSort, 0, arrayToSort.length - 1);
+                setup.enableNavBarElements("mergeSortBtn"); 
+                running = false;
+            }
+        });
+    }    
 }
 
 const quickSortBtn = document.getElementsByClassName("quickSortBtn");
 navBarList.push(quickSortBtn[0]);
 navBarList.push(quickSortBtn[1]);
 
-if (quickSortBtn[0]) {
-    quickSortBtn[0].addEventListener("click", async function() {
-        if (running !== true) {
-            running = true;
-            setup.resetArray();
-            setup.disableNavBarElements("quickSortBtn"); 
-            await quickSort.quickSort(arrayToSort, 0, arrayToSort.length - 1);
-            setup.enableNavBarElements("quickSortBtn"); 
-            running = false;
-        }
-    });
+for (let i = 0; i < 2; i++) {
+    if (quickSortBtn[i]) {
+        quickSortBtn[i].addEventListener("click", async function() {
+            if (running !== true) {
+                running = true;
+                setup.resetArray();
+                setup.disableNavBarElements("quickSortBtn"); 
+                await quickSort.quickSort(arrayToSort, 0, arrayToSort.length - 1);
+                await quickSort.finalCheck(arrayToSort);
+                setup.enableNavBarElements("quickSortBtn"); 
+                running = false;
+            }
+        });
+    }
 }
 
 let sleepTime = 20;
@@ -136,7 +147,6 @@ function arraySizeSliderUpdate() {
 
 const setup = (() => {
     const resetArray = () => {
-        running = false;
         arrayToSort = [];
         comparisons = 0;
         completed = 0;
@@ -162,14 +172,19 @@ const setup = (() => {
     const disableNavBarElements = (id) => {
         sizeRange.disabled = true;
         for (let i = 0; i < navBarList.length; i+=2) {
-            navBarList[i].classList.add("disabled");
-            navBarList[i+1].classList.add("disabled");
-            if (navBarList[i].id !== id) {
+            if (i == 0) {
+                navBarList[i].classList.add("disabled");
                 navBarList[i].classList.add("notActive");
-                navBarList[i+1].classList.add("notActive");
             } else {
-                navBarList[i].classList.add("active");
-                navBarList[i+1].classList.add("active");
+                navBarList[i].classList.add("disabled");
+                navBarList[i-1].classList.add("disabled");
+                if (navBarList[i].id !== id) {
+                    navBarList[i].classList.add("notActive");
+                    navBarList[i-1].classList.add("notActive");
+                } else {
+                    navBarList[i].classList.add("active");
+                    navBarList[i-1].classList.add("active");
+                }
             }
         }
     }
@@ -447,6 +462,13 @@ const mergeSort = (() => {
 })();
 
 const quickSort = (() => {
+    async function finalCheck(arr) {
+        for (let i = 0; i < arr.length; i++){
+            let indexToUpdate = document.getElementById("visIndex" + i);
+            indexToUpdate.style.backgroundColor = "green";
+        }
+    }
+
     async function update (arr, i, j) {
         let indexToUpdate1 = document.getElementById("visIndex" + i);
         let indexToUpdate2 = document.getElementById("visIndex" + j);
@@ -494,7 +516,7 @@ const quickSort = (() => {
         }
     }
 
-    return { swap, partition, quickSort }
+    return { finalCheck, swap, partition, quickSort }
 })();
 
 setup.resetArray(arrayToSort);
